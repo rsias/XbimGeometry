@@ -37,7 +37,7 @@ namespace Xbim.Geometry.Engine.Interop
             _logger = logger ?? XbimLogging.CreateLogger<XbimGeometryEngine>();
 
             var conventions = new XbimArchitectureConventions();    // understands the process we run under
-            string assemblyName = $"{conventions.ModuleName}.dll";// + conventions.Suffix; dropping the use of a suffix
+            string assemblyName = $"{conventions.ModuleName}{conventions.Suffix}"; // Fixed error "simple name should be the same as resolved assembly", eirik 1/15/2021
             _logger.LogDebug("Loading {assemblyName}", assemblyName);
             try
             {
@@ -62,7 +62,7 @@ namespace Xbim.Geometry.Engine.Interop
             catch (Exception e)
             {
                 _logger.LogError(0, e, "Failed to construct XbimGeometryEngine");
-                throw new FileLoadException($"Failed to load Xbim.Geometry.Engine{conventions.Suffix}.dll", e);
+                throw new FileLoadException($"Failed to load Xbim.Geometry.Engine.dll{conventions.Suffix}", e);
             }
 
         }
